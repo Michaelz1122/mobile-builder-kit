@@ -1,27 +1,14 @@
-# قواعد واتجاه الردود باللغة العربية (Arabic RTL & BiDi Rules)
-# متوافقة مع كافة الموديلات: Claude, Codex/GPT, Gemini
+---
+trigger: always_on
+description: Improve Arabic and Egyptian Arabic readability and bidirectional text handling where supported.
+---
 
-عند الرد بأي نص عربي (سواء فصحى أو عامية مصرية)، يجب الالتزام بالقواعد التالية دائماً:
+# Arabic RTL and mixed-language output
 
-1. **مراعاة بيئة العرض (Surface Awareness)**:
-   - **في واجهات الشات والـ Webview (مثل Antigravity, Cursor, VS Code, ChatGPT Web):**
-     ابدأ الرد في السطر الأول مباشرة بـ:
-     ```html
-     <div dir="rtl">
-     ```
-     واختم الرد في السطر الأخير تماماً بـ:
-     ```html
-     </div>
-     ```
-     هذا التغليف يضمن محاذاة كل العناوين والقوائم والنقاط من اليمين إلى اليسار (RTL).
-   - **في بيئات سطر الأوامر (CLI / Terminal مثل Claude Code CLI, Codex Terminal):**
-     الطرفية لا تعالج وسوم HTML؛ لا تضع وسوم `<div dir="rtl">` تجنباً لتشوه المخرجات، واعتمد على البدء بكلمات عربية وضبط علامات الترقيم.
-
-2. **سلامة علامات الترقيم والنصوص المختلطة (BiDi Hygiene)**:
-   - المصطلحات التقنية والإنجليزية (مثل: React Native, Expo, Supabase, Google Play) توضع دائماً داخل سياق عربي أو بين أقواس.
-   - **ممنوع نهائياً** إنهاء أي جملة بكلمة إنجليزية متبوعة بعلامة ترقيم عربية مباشرة، لتفادي قفز النقطة أو علامة التعجب إلى أقصى اليمين. اختم دائماً بكلمة عربية أو ضع علامة الاتجاه `&rlm;` (`\u200F`).
-   - أسماء الأكواد والمتغيرات والأوامر والمسارات والروابط توضع داخل علامات التنصيص المائلة (Backticks): `code`.
-
-3. **كتل الأكواد البرمجية (Code Blocks)**:
-   - كتل الأكواد (Fenced Code Blocks ```) تظل بطبيعتها LTR من اليسار لليمين.
-   - الشروحات والتعليقات خارج كتل الأكواد تظل بالكامل RTL.
+- When replying in Arabic, start paragraphs and bullet items with Arabic words when natural.
+- Keep code, terminal commands, paths, URLs and identifiers in code spans or fenced code blocks.
+- Respect the active renderer. **Do not automatically wrap Markdown messages in HTML**: chat/terminal renderers may escape or display tags literally, and HTML blocks can interfere with Markdown parsing.
+- In an HTML surface that is known to render HTML, a scoped element with dir="rtl" may be used. Otherwise rely on clear Arabic text and test the actual app/IDE renderer.
+- For programmatically generated UI, set the correct layout direction and test mixed Arabic, Latin words, punctuation, digits, dates and navigation on real devices.
+- Use directional isolation only where the output format supports it; do not insert invisible Unicode marks blindly into code or filenames.
+- Neither this rule nor a skill can guarantee RTL layout in every model or host.

@@ -1,75 +1,71 @@
-# Mobile Builder Kit — مساعد بناء تطبيقات الموبايل بالـAI
+# Mobile Builder Kit — مهارات مجانية لتطوير تطبيقات الموبايل بالـAI
 
-باكدج Skills و Rules مجانية ومفتوحة المصدر متوافقة مع كافة موديلات الذكاء الاصطناعي: **Claude (Anthropic)** و **Codex / ChatGPT (OpenAI)** و **Gemini / Antigravity (Google)** لبناء تطبيقات Android بـ **React Native + Expo**.
+باكدج مفتوحة المصدر لأي حد بيطور تطبيقات Android باستخدام AI Coding Agents، خصوصا React Native وExpo.
 
-**دي ملفات تعليمات للأدوات اللي بتدعم Agent Skills، مش تطبيق بيتثبت من Google Play.**
+**مش تطبيق Android أو إضافة بتشتغل لوحدها**. دي ملفات Agent Skills وRules بتتحط في أماكن بتختلف حسب الأداة اللي بتستخدمها.
 
-## دعم كافة الموديلات (Multi-Model Support)
+## المهارات
 
-| الموديل / الأداة | طريقة الدعم | ملف الإعدادات |
-| --- | --- | --- |
-| **Claude (Anthropic)** | يدعم Claude Code CLI و Claude 3.5 & 3.7 Sonnet | `CLAUDE.md` + `.agents/skills/` |
-| **Codex / ChatGPT (OpenAI)** | يدعم Codex CLI و GPT-4o و Copilot | `AGENTS.md` + `.agents/skills/` |
-| **Gemini (Google)** | يدعم Google Antigravity بالكامل | `GEMINI.md` + `.agents/` |
-| **Cursor** | يدعم محرر Cursor مع Claude أو GPT-4o | `.cursorrules` + `.agents/skills/` |
-
-### ذكاء التعامل مع بيئات العرض (RTL Surface Awareness)
-- **في واجهات الشات والـ Webview (مثل Antigravity, Cursor, VS Code):** يتم تغليف الردود بـ `<div dir="rtl">` لضمان المحاذاة من اليمين لليسار.
-- **في شاشات الطرفية و CLI (مثل Claude Code CLI و Codex Terminal):** يتم تعطيل وسوم HTML تلقائياً لمنع تشويه التيرمينال، مع الالتزام التام بسلامة علامات الترقيم (BiDi Hygiene) وبدء الفقرات بالعربي.
-
-## الباكدج فيها إيه؟
-
-| الـSkill | بتساعدك في إيه؟ |
+| Skill | بتعمل إيه؟ |
 | --- | --- |
-| `mobile-builder-kit` | تنظيم رحلة إنشاء التطبيق من الفكرة لحد النشر. |
-| `arabic-rtl` | تحسين ردود الـAI بالعربي واتجاه النصوص في التطبيق. |
-| `grill-me` | أسئلة مركزة عشان نحسم قرارات المشروع قبل البرمجة. |
-| `app-blueprint` | تحويل فكرتك لمتطلبات واضحة وMaster Prompt واحد. |
-| `play-in-app-updates` | إضافة تحديثات التطبيق الأصلية من Google Play. |
-| `play-in-app-review` | طلب تقييم التطبيق في الوقت المناسب. |
-| `mobile-quality-audit` | مراجعة جودة التطبيق والأمان والتجربة والأداء. |
-| `play-launch-checklist` | تجهيز Google Play واختبارات النشر والخصوصية والربح. |
-| `mobile-aso-growth` | تحسين ASO ومتابعة التحميلات والحملات. |
+| `mobile-builder-kit` | بتساعدك تمشي من الفكرة لحد إطلاق التطبيق |
+| `arabic-rtl` | بتحسن وضوح العربي وبتراجع واجهات RTL |
+| `app-discovery` | بتسألك عن فكرتك سؤال سؤال وتطلع مواصفات واضحة |
+| `app-blueprint` | بتحول الفكرة لـMVP وMaster Prompt |
+| `play-in-app-updates` | تخطيط تحديثات التطبيق الأصلية من Google Play |
+| `play-in-app-review` | إضافة طلب تقييم من غير إزعاج المستخدم |
+| `mobile-quality-audit` | مراجعة الأمان والأداء والاختبارات |
+| `play-launch-checklist` | تجهيز التطبيق للنشر على Google Play |
+| `mobile-aso-growth` | تحسين ظهور التطبيق وقياس التسويق |
 
-### ملفات الـ Rules الدائمة (Always-on Rules)
-بجانب الـ Skills، تحتوي الباكدج على ملف Rules جاهز (`rules/arabic-rtl.md` و `rules/AGENTS.md`). يضمن هذا الملف تطبيق قواعد الـ RTL وتغليف الردود بـ `<div dir="rtl">` تلقائياً في كل رسالة دون انتظار تفعيل المهارة حسب سياق الحديث.
+**مهم:** اسم `grill-me` موجود للتوافق مع النسخة القديمة، لكن أنسب اسم للمهارة بتاعتنا `app-discovery` لأن Antigravity فيه أمر مدمج اسمه `/grill-me`.
 
-## التثبيت السريع
+## التثبيت
 
-1. نزّل ملفات الباكدج أو اعمل Clone للـRepository بعد رفعها على GitHub.
-2. حط فولدرات الـSkills داخل `.agents/skills/` في مشروعك على Antigravity.
-3. أو شغّل أمر التثبيت التالي من فولدر الباكدج:
+نزّل الريبو وشغل:
 
 ```bash
-python scripts/install.py --target /path/to/your-project --all
+git clone https://github.com/Michaelz1122/mobile-builder-kit.git
+cd mobile-builder-kit
+python scripts/install.py --agent antigravity --target /path/to/my-app --all --dry-run
+python scripts/install.py --agent antigravity --target /path/to/my-app --all
 ```
 
-ولو عايز تثبتها لكل مشاريعك على جهازك:
+غير `antigravity` إلى `claude` أو `codex` أو `cursor` حسب أداة التطوير. ولو عايز كلهم استخدم `--agent all`.
+
+**مسارات التثبيت في المشروع:**
+
+- Antigravity: `.agents/skills/` والقواعد في `.agents/rules/`.
+- Claude Code: `.claude/skills/` و`CLAUDE.md`.
+- Codex: `.agents/skills/` و`AGENTS.md`.
+- Cursor: `.cursor/skills/` و`.cursor/rules/*.mdc`.
+
+للتثبيت على مستوى المستخدم بدل مشروع واحد:
 
 ```bash
-python scripts/install.py --global --all
+python scripts/install.py --agent claude --global --all
 ```
 
-**ملاحظة:** اختيار `--global` مخصص لمسار Antigravity الافتراضي. أدوات الـAI التانية ممكن تحتاج مسار مختلف.
+السكريبت مش بيمسح إعداداتك الموجودة ولا بيستبدلها تلقائيا. استخدم `--force` فقط بعد عمل نسخة احتياطية.
 
-## أمثلة استخدام
+## ازاي تستدعي المهارة؟
 
-- `استخدم grill-me واسألني عن فكرة التطبيق سؤال سؤال لحد ما نبقى متفقين على المواصفات.`
-- `استخدم arabic-rtl وخلي ردودك بالمصري واتجاه النص من اليمين للشمال، وخلي المصطلحات الإنجليزي واضحة.`
-- `استخدم app-blueprint وحوّل فكرتي لخطة MVP وMaster Prompt واحد لـAntigravity.`
-- `راجع تطبيق Expo الحالي وأضف خطة In-App Updates وIn-App Review مناسبة للنسخة عندي.`
-- `اعمل Mobile Quality Audit للتطبيق قبل ما أرفعه على Google Play.`
+بعد التثبيت، افتح محادثة جديدة واكتب مثلا:
 
-## حاجات لازم تعرفها
+- `استخدم app-discovery واسألني عن فكرة التطبيق سؤال سؤال.`
+- `استخدم arabic-rtl وراجع اتجاه النص العربي وشاشات التطبيق.`
+- `استخدم app-blueprint وجهزلي MVP وMaster Prompt واحد.`
+- `استخدم play-in-app-updates وراجع توافق التحديثات مع نسخة Expo عندي.`
+- `استخدم mobile-quality-audit واكتبلي أهم مشاكل التطبيق قبل النشر.`
 
-- الـSkill بتحسن تعليمات الرد العربي، لكن مش بتتحكم 100% في طريقة عرض الشات أو التزام كل موديل.
-- In-App Updates الخاصة بـGoogle Play مختلفة عن تحديثات Expo OTA.
-- ظهور نافذة التقييم مش مضمون، لأن Google Play عنده حدود لعدد مرات عرضها.
-- أي مميزات Native لازم تتجرب على نسخة مناسبة، ومش كل حاجة بتشتغل داخل Expo Go.
-- الـSkills مش هتنشر التطبيق أو تشتري خدمات أو تعدل إعدادات حساسة بدون موافقة.
+بعض الأدوات بتعرض المهارات بأوامر Slash أو من قائمة. ولو الأمر مش ظاهر، اطلب المهارة بالاسم.
 
-## الملفات والدعم
+## ملاحظات مهمة
 
-تفاصيل كل مهارة في `skills/<skill-name>/SKILL.md`، والتجارب في `examples/prompts.md`.
+- ملف RTL مش بيضمن إن كل موديل وكل واجهة شات هتعرض العربي صح. **مش بنفرض وسوم HTML على كل رد**؛ لأنها ممكن تظهر كنص عادي. لازم نجرب الأداة الفعلية.
+- تحديثات Play الأصلية غير تحديثات Expo OTA.
+- Google Play ممكن مايعرضش نافذة التقييم بسبب الحدود بتاعته.
+- الـSkills مش بتثبت مميزات Native ولا بتنشر تطبيق لوحدها.
+- أوامر التعديل الحساسة أو الدفع أو النشر لازم موافقة واضحة.
 
-راجع [README الإنجليزي](README.md) للمصادر الرسمية والتفاصيل الكاملة. الباكدج مرخصة MIT.
+للتوثيق الإنجليزي بالتفصيل: [README.md](README.md). الترخيص [MIT](LICENSE).

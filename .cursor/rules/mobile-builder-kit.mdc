@@ -1,0 +1,14 @@
+---
+description: Mobile Builder Kit conventions and Arabic RTL response guidance.
+alwaysApply: true
+---
+
+# Mobile Builder Kit — Cursor
+
+- Reply in the user's chosen language, with clear Egyptian Arabic when requested.
+- Keep Markdown as Markdown; don't wrap every reply with raw HTML tags. Use renderer-aware bidi formatting.
+- Inspect the existing project, Expo SDK, React Native version and permissions before editing or installing packages.
+- Distinguish Google Play binary in-app updates from Expo OTA updates; review prompts may be suppressed by Play quotas.
+- Prefer the modular skills installed under .cursor/skills/ (especially app-discovery, arabic-rtl and mobile-quality-audit).
+- Verify security, privacy, data integrity and device behavior; don't claim a feature works without evidence.
+- Ask for approval before publishing, spending money, deleting data or making other irreversible changes.

@@ -1,142 +1,90 @@
 # Mobile Builder Kit
 
-**An open-source Agent Skills pack for people building Android apps with AI.**  
-Built with a React Native + Expo workflow in mind, but most skills are framework-agnostic.
+**Free, open-source Agent Skills for AI-assisted Android development** — especially React Native and Expo. [العربية](README.ar.md) · [Agent Skills specification](https://agentskills.io/specification)
 
-[العربية](README.ar.md) · [Agent Skills specification](https://agentskills.io/specification) · [Antigravity Skills documentation](https://antigravity.google/docs/skills)
+Use the skills to define a realistic MVP, improve Arabic RTL, conduct a focused requirements interview, plan native updates and reviews, audit app quality, and prepare for Google Play release.
 
-> **What it is:** reusable AI-agent instructions packaged as `SKILL.md` folders.  
-> **What it is not:** an Android APK, a Play Store application, an automatic plugin, or a guarantee that every AI model will obey its instructions.
+> These are **instructions for compatible coding agents**, not an Android APK or a guarantee that a particular feature is implemented. Each host has its own skill discovery and rendering rules.
 
-## Multi-Model & Cross-Agent Support
+## Included skills
 
-Mobile Builder Kit is designed to work out of the box with the top AI coding agents and LLMs:
-
-| Model / Agent | How it's supported | Primary Config |
-| --- | --- | --- |
-| **Claude (Anthropic)** | Claude Code CLI, Claude 3.5 & 3.7 Sonnet | `CLAUDE.md`, `.agents/skills/` |
-| **Codex / ChatGPT (OpenAI)** | Codex CLI, GPT-4o, o1, o3, Copilot | `AGENTS.md`, `.agents/skills/` |
-| **Gemini (Google)** | Google Antigravity, Gemini 3.8 / 2.5 Pro | `GEMINI.md`, `~/.gemini/config/` |
-| **Cursor** | Cursor IDE with Claude / GPT-4o | `.cursorrules`, `.agents/skills/` |
-
-### Environment-Aware RTL
-- **Webviews & IDE Chat (Antigravity, Cursor, VS Code):** Enforces `<div dir="rtl">` wrapper for proper right-to-left layout.
-- **Terminal CLI (Claude Code CLI, Codex Terminal):** Automatically avoids raw HTML tags to prevent terminal clutter while strictly enforcing Arabic logical ordering and BiDi punctuation hygiene.
-
-## Skills included
-
-| Skill | When to use |
+| Skill | Purpose |
 | --- | --- |
-| `mobile-builder-kit` | Start or coordinate a complete AI-assisted Android app workflow. |
-| `arabic-rtl` | Produce readable Arabic/English mixed responses and audit app UI directionality. |
-| `grill-me` | Interview the developer about uncertain requirements, one decision at a time. |
-| `app-blueprint` | Turn a rough app idea into an MVP specification and a single master build prompt. |
-| `play-in-app-updates` | Plan Google Play native in-app updates; distinguish these from Expo OTA updates. |
-| `play-in-app-review` | Add compliant, milestone-based Google Play in-app review prompts. |
-| `mobile-quality-audit` | Audit mobile code, security, user data, accessibility, testing and performance. |
-| `play-launch-checklist` | Prepare Android releases, Play Console, billing, privacy, testing and rollout. |
-| `mobile-aso-growth` | Plan App Store Optimization, analytics and small-budget acquisition tests. |
+| `mobile-builder-kit` | Coordinate the end-to-end app workflow |
+| `arabic-rtl` | Arabic language readability and app RTL QA |
+| `app-discovery` | Structured one-question-at-a-time app interview (**recommended** instead of the built-in Antigravity `/grill-me`) |
+| `grill-me` | Legacy alias, retained for compatibility; not installed by `--all` |
+| `app-blueprint` | MVP requirements and a single master build prompt |
+| `play-in-app-updates` | Plan Google Play native binary update flows |
+| `play-in-app-review` | Plan responsible Play in-app review prompts |
+| `mobile-quality-audit` | Review security, performance, accessibility and testing |
+| `play-launch-checklist` | Release and Google Play policy checklist |
+| `mobile-aso-growth` | ASO and measured app acquisition |
 
-### Always-On Rules
-In addition to on-demand skills, the kit includes persistent rules in `rules/` (`rules/arabic-rtl.md` and `rules/AGENTS.md`). While skills are activated contextually, rules placed in `.agents/rules/` or project root `AGENTS.md` enforce RTL message wrapping (`<div dir="rtl">`) and punctuation hygiene unconditionally on every response.
+## Install — recommended
 
-Each skill can be installed **individually**. The umbrella `mobile-builder-kit` skill points to the others, but agent support for discovering sibling skills varies; install all skills for the broadest coverage.
-
-## Install in Google Antigravity
-
-Antigravity looks for project skills in `<project>/.agents/skills/<skill-name>/SKILL.md` and global skills under `~/.gemini/config/skills/<skill-name>/SKILL.md` (see its current documentation).
-
-**Option A — after cloning or downloading this repository:**
+Requires Python 3.10+ and a local copy of the repository:
 
 ```bash
-python scripts/install.py --target /path/to/your-android-project --all
+git clone https://github.com/Michaelz1122/mobile-builder-kit.git
+cd mobile-builder-kit
+python scripts/install.py --list
+python scripts/install.py --agent antigravity --target /path/to/your-app --all --dry-run
+python scripts/install.py --agent antigravity --target /path/to/your-app --all
 ```
 
-The command copies every folder from `skills/` into `/path/to/your-android-project/.agents/skills/`. It will **not overwrite existing skills by default**. Use `--force` only after reviewing changes.
+Change the agent name to `claude`, `codex`, or `cursor`; or use `--agent all` to install for all supported agents. On Windows, use your project directory as the target. An existing configuration is **never overwritten** unless `--force` is explicitly supplied. Make a backup before `--force`.
 
-**Option B — copy manually:**
+### Where the installer puts files
 
-```text
-my-app/
-  .agents/
-    skills/
-      arabic-rtl/SKILL.md
-      grill-me/SKILL.md
-      app-blueprint/SKILL.md
-      ...
-```
+| Agent | Project skills | User/global skills | Project rules/config |
+| --- | --- | --- | --- |
+| Google Antigravity | `.agents/skills/` | `~/.gemini/config/skills/` | `.agents/rules/arabic-rtl.md` with `trigger: always_on` |
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` | `CLAUDE.md` |
+| OpenAI Codex | `.agents/skills/` | `~/.agents/skills/` | `AGENTS.md` |
+| Cursor | `.cursor/skills/` | `~/.cursor/skills/` | `.cursor/rules/mobile-builder-kit.mdc` |
 
-**Global installation:** pass `--global` to copy into your user-level Antigravity skills directory. On Windows, the installer uses your home directory too.
+Use `python scripts/install.py --agent claude --global --all` for a user-level installation. Cursor's persistent **global** rules are configured in Cursor Settings rather than written automatically by this installer. Antigravity's global guidance is placed in `~/.gemini/GEMINI.md`.
 
-**Install selected skills:**
+Run `python scripts/install.py --agent all --target /path/to/app --all` to install for multiple tools in one project. Different tools may read the same skill names differently; **test each host rather than assuming universal automatic activation**.
+
+### One skill or rules only
 
 ```bash
-python scripts/install.py --target /path/to/your-android-project --skills arabic-rtl,grill-me,play-in-app-review
+python scripts/install.py --agent antigravity --target /path/to/app --skills arabic-rtl,app-discovery
+python scripts/install.py --agent antigravity --target /path/to/app --rules
 ```
 
-Antigravity should discover applicable skills automatically; you can explicitly ask the agent to use one by name. Other tools supporting the [Agent Skills standard](https://agentskills.io/specification) may use different installation directories.
+`--all` installs all recommended skills plus the appropriate rules/config; `--skills` installs only the selected skill folders; `--rules` installs only rules/config. You can still explicitly request `--skills grill-me` for the legacy folder; in Antigravity it maps to `app-discovery` to avoid collision with its built-in command.
 
-## Example prompts
+## Invoke the skills
 
-```text
-Use grill-me to question me about my app idea until we have a buildable specification.
-```
+After installing and restarting/reloading the agent if necessary, ask:
+- "Use **app-discovery** and ask me the key questions for my app, one at a time."
+- "Use **arabic-rtl** to audit navigation, mixed Arabic/English text and inputs in this Expo app."
+- "Use **app-blueprint** and create an MVP + one build prompt."
+- "Use **play-in-app-updates** to inspect my Expo app and plan compatible Play-native updates."
+- "Use **mobile-quality-audit** to identify release blockers with evidence."
 
-```text
-Use arabic-rtl. Reply in Egyptian Arabic with correct RTL and readable English terms.
-```
+Some agents provide skill slash commands or picker UI; when unsure, mention the skill name in plain language.
 
-```text
-Use app-blueprint. Turn this app idea into an MVP and one Antigravity master prompt.
-```
+## RTL and safety limitations
 
-```text
-Use play-in-app-updates and play-in-app-review. Inspect my existing Expo app, check current
-SDK compatibility, propose implementation, and only edit the project after my approval.
-```
+- HTML wrappers like `<div dir="rtl">` **must not be forced** into every reply. Markdown renderers, IDEs and terminals vary. Prefer natural Arabic-first sentences and test the real output surface; use HTML direction only where verified.
+- Real app RTL is a **UI implementation and device-test requirement**, not a chat formatting trick.
+- Play Core in-app updates require Play-distributed eligible builds. Expo OTA updates distribute compatible JS/assets, not native binaries.
+- In-app review prompts can be suppressed by Play quotas.
+- Audit installed SDK versions and dependencies before implementation; don't imply implementation or production readiness on the basis of instructions alone.
+- Publishing, spending money, deleting data and changing credentials require the developer's explicit approval.
 
-```text
-Use mobile-quality-audit and play-launch-checklist. Identify release blockers and provide
-P0/P1/P2 fixes with evidence. Do not claim a feature is implemented without testing it.
-```
-
-More examples in [examples/prompts.md](examples/prompts.md).
-
-## Important limitations
-
-1. **RTL is best effort:** a skill can direct the model to write Arabic clearly. It cannot force the chat application's renderer, override higher-priority instructions, or guarantee that every model follows it. App UI RTL requires UI implementation and real-device tests.
-2. **Google Play in-app updates ≠ Expo OTA updates:** native binary updates use Google Play's update experience; Expo Updates distributes compatible JS/assets changes. Both have different eligibility and testing requirements.
-3. **In-app review is not guaranteed to display:** Google Play applies undisclosed quotas. Never promise a dialog or infer that a review was submitted.
-4. **Native features require platform checks:** Expo Go, development builds and Play-distributed builds behave differently. Verify versions and compatibility before adding a package.
-5. **Google Play policies change:** always check official requirements for the actual account, targetSdk, permission set, region and release date.
-6. **Do not auto-modify someone else's repo:** the skills propose a plan and request confirmation before destructive, paid, security-sensitive or publishing actions.
-
-## Publish this repository
-
-See [PUBLISHING.md](PUBLISHING.md) for GitHub website and CLI instructions.
-
-## Validate this pack
-
-Requires Python 3.10+; no third-party packages:
+## Verify
 
 ```bash
 python scripts/validate_skills.py
 python -m unittest discover -s tests -v
+python scripts/install.py --agent all --target /path/to/test-project --all --dry-run
 ```
 
-## Contributing
+See [Arabic README](README.ar.md), [contribution guide](CONTRIBUTING.md), and [publishing instructions](PUBLISHING.md). License: [MIT](LICENSE).
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Corrections backed by official Android/Expo/Play sources are welcome. Original content under [MIT](LICENSE).
-
-## Primary sources
-
-- [Agent Skills specification](https://agentskills.io/specification)
-- [Google Antigravity agent skills](https://antigravity.google/docs/skills)
-- [Google Play in-app updates](https://developer.android.com/guide/playcore/in-app-updates)
-- [Google Play in-app reviews](https://developer.android.com/guide/playcore/in-app-review)
-- [Expo StoreReview](https://docs.expo.dev/versions/latest/sdk/storereview/)
-- [Expo Updates](https://docs.expo.dev/eas-update/introduction/)
-- [Google Play Billing](https://developer.android.com/google/play/billing)
-- [Personal developer testing requirements](https://support.google.com/googleplay/android-developer/answer/14151465)
-
-_Maintainer: Michael Zahy. Initial release: November 2026._
+Maintainer: Michael Zahy.

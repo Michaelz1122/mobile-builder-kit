@@ -1,56 +1,32 @@
 ---
 name: arabic-rtl
-description: Guarantees strict right-to-left (RTL) formatting and BiDi hygiene for Arabic AI responses and Arabic mobile interfaces (React Native / Expo). Use for Arabic chat formatting, technical BiDi text, or mobile UI layout.
+description: Improves Arabic and Egyptian Arabic readability, mixed Arabic/English bidirectional text, and React Native/Expo RTL layouts. Use for Arabic answers, chat presentation issues and Arabic mobile app UI review; renderer support must be verified.
 license: MIT
 ---
 
-# Arabic RTL — Language, Chat Hygiene & Mobile Interface Quality
+# Arabic RTL — renderer-aware chat and mobile UI
 
-## 1. Chat & Markdown Responses (قواعد صياغة وتنسيق الردود)
+## 1. Arabic replies
 
-عند الرد باللغة العربية (أو العامية المصرية)، يجب الالتزام الصارم بالقواعد التالية لضمان اتجاه النص وسلامة علامات الترقيم:
+- Reply in Egyptian Arabic when that is the user's language or stated preference. Keep prose natural.
+- Prefer Arabic-first sentences, especially for list items and headings with Latin technical terms.
+- Wrap paths, code, commands, identifiers and URLs in backticks rather than injecting direction marks into source code.
+- **Do not wrap every response in raw HTML.** Markdown hosts, terminals and IDE chat clients may show tags literally or change how fenced code and lists render.
+- If the target is known to support HTML, `<div dir="rtl">` can be an opt-in wrapper for that particular renderer. Never claim this works on every model or chat interface.
+- Handle mixed Arabic/English punctuation without blanket bans on sentences ending in English. Prefer correct isolation when supported by the actual output format.
+- When a display defect is reported, inspect the real renderer, test a small sample and choose a renderer-specific fix.
 
-### أ. مراعاة بيئة العرض والموديل (Surface & Model Awareness)
-- **واجهات الشات والـ Webview (مثل Google Antigravity، Cursor، VS Code، أدوات المتصفح):**
-  الواجهة تدعم الـ HTML، ولفرض محاذاة اليمين لليسار ومنع القفز لليسار، يجب وضع وسم `<div dir="rtl">` في بداية كل رد باللغة العربية، وإغلاقه بـ `</div>` في نهاية الرد:
-  ```html
-  <div dir="rtl">
+## 2. React Native / Expo app layout
 
-  محتوى الرد هنا...
+1. Inspect the app's localization, React Native I18nManager configuration and the installed Expo/RN versions before changing direction settings.
+2. Apply `writingDirection: "rtl"` and `textAlign: "right"` where Arabic inputs/text require them, based on the specific component. Do not globally flip every flex row or override all user-entered text.
+3. Mirror only directional icons and semantics; do not mirror logos, video playback, charts or every numeric token.
+4. Use LTR isolation for URLs, email, phone numbers and code-like tokens as appropriate; localized currencies and dates must follow product requirements.
+5. Inspect text cursor, placeholders, truncation, fonts, modals, navigators and Android back behavior.
+6. Test both Arabic RTL and English LTR on a real Android device. Check dynamically switched language and app restart if the framework requires it.
 
-  </div>
-  ```
-- **بيئات سطر الأوامر والطرفية (CLI / Terminal مثل Claude Code CLI و OpenAI Codex Terminal):**
-  طرفيات الـ Terminal لا تدعم وسوم HTML. **تجنب وضع وسوم HTML في الـ CLI** حتى لا تظهر كأكواد خام، واعتمد بدلاً من ذلك على بدء كل فقرة بنص عربي، وضبط علامات الترقيم (BiDi Hygiene)، والفصل المنطقي للمصطلحات الإنجليزية.
-- **توافق الموديلات (Claude, Codex/GPT, Gemini):**
-  - **Claude (Anthropic)**: يعالج التوجيهات الهيكلية بصرامة؛ احرص على تحديد لغة الرد والمصطلحات بوضوح دون افتراض أي دوال غير موثقة.
-  - **Codex / GPT (OpenAI)**: يفضل التعليمات المنظمة على هيئة خطوات مرقمة (Step-by-step).
-  - **Gemini (Google)**: يدعم التعامل الغني مع وسوم التنسيق والحاويات المرئية المتعددة.
+## Acceptance
 
-### ب. ضبط النصوص المختلطة (BiDi Text Hygiene)
-- **المصطلحات التقنية والإنجليزية**: عند ذكر أسماء التقنيات والحزم (مثل React Native, Expo, Supabase, Google Play)، ضعها دائماً داخل سياق عربي سلس أو بين أقواس.
-- **منع تشوه علامات الترقيم**: **ممنوع نهائياً** إنهاء الجملة أو الفقرة بكلمة إنجليزية متبوعة بعلامة ترقيم عربية مباشرة، لأن محرك العرض سينقل النقطة أو علامة التعجب إلى أقصى اليمين بدلاً من اليسار. اختم الجملة دائماً بكلمة عربية أو ضع علامة الاتجاه الخفية `&rlm;` (`\u200F`).
-- **المعرفات والأكواد**: حافظ على أسماء المتغيرات والأوامر والروابط والمسارات داخل علامات التنصيص المائلة (Backticks) دون ترجمتها.
+No clipped or reversed labels, readable mixed-script text, correctly directional navigation, and working input cursor/selection. Document test environment and anything not verified.
 
-### ج. كتل الأكواد البرمجية (Code Blocks)
-- الكود البرمجي داخل كتل الأكواد (Fenced Code Blocks ```) يظل بطبيعته من اليسار لليمين (LTR).
-- الشرح والملاحظات خارج كتل الأكواد تظل بالكامل من اليمين لليسار داخل حاوية `<div dir="rtl">`.
-
----
-
-## 2. واجهات تطبيقات الموبايل (React Native & Expo UI Protocol)
-
-عند بناء أو مراجعة واجهات التطبيقات التي تدعم اللغة العربية:
-
-1. **التعامل مع اتجاه النص والمحاذاة**:
-   - تطبيق `writingDirection: 'rtl'` ومحاذاة `textAlign: 'right'` للنصوص العربية داخل مكونات `Text` و `TextInput`.
-   - استخدام `flexDirection: 'row-reverse'` فقط للحاويات ذات الطابع الاتجاهي، وليس لعناصر الوسائط أو الرسوم البيانية.
-2. **عكس الأيقونات الاتجاهية**:
-   - عكس أيقونات التنقل والاتجاه (مثل: أسهم الرجوع والتقدم)، مع الإبقاء على الأيقونات العامة محايدة دون عكس (مثل: زر التشغيل Play، البحث Search، وشعارات العلامات التجارية).
-3. **الحفاظ على LTR للبيانات الحساسة**:
-   - أرقام الهواتف، رموز التحقق (OTP)، العناوين والروابط البريدية (URLs / Emails)، والعملات يجب أن تحتفظ باتجاه LTR السليم منعاً لقراءتها بشكل خاطئ.
-4. **فحص حقول الإدخال والشاشات**:
-   - التأكد من موضع مؤشر الكتابة (Cursor) والنص التلميحي (Placeholder) في حقول الإدخال.
-   - مراجعة النوافذ المنبثقة (Modals / Alerts) والتنقل في الـ Stacks والتأكد من دعم الخطوط العربية وتجربتها على جهاز حقيقي.
-
-راجع أيضاً: [RTL test checklist](references/rtl-layout-checklist.md).
+See [RTL test checklist](references/rtl-layout-checklist.md).

@@ -1,43 +1,25 @@
-# CLAUDE.md — Claude Code & Anthropic Models Configuration
+# Mobile Builder Kit — Claude Code instructions
 
-## Project Overview
-**Mobile Builder Kit** is an open-source Agent Skills and Rules pack for developers building Android mobile applications with AI assistants (React Native + Expo). It provides 9 specialized skills and persistent rules designed to work seamlessly across **Claude (Anthropic)**, **Codex / ChatGPT (OpenAI)**, and **Gemini / Antigravity (Google)**.
+Modular Agent Skills for Android app building (especially React Native and Expo).
 
----
+## Answer and UX rules
 
-## Guidelines for Claude & Claude Code
+- Use clear Egyptian Arabic when requested and keep technical terms readable.
+- Never force raw HTML wrappers around Markdown or terminal answers; use renderer-aware bidi text.
+- Review Arabic app UI directionality, navigation, mixed-script labels and inputs on real devices.
 
-### 1. Arabic Language & RTL Protocol
-- **Terminal / CLI mode (`claude` CLI)**:
-  - Do NOT wrap responses in raw HTML tags like `<div dir="rtl">` because terminal emulators render HTML literally.
-  - Start paragraphs and list items with Arabic words to preserve natural logical reading order.
-  - Maintain strict BiDi punctuation hygiene: never end a sentence with an English token followed directly by punctuation.
-- **Web / Desktop mode (Claude Web / GUI)**:
-  - Wrap full Arabic responses with `<div dir="rtl"> ... </div>` to enforce right-to-left alignment.
+## Engineering workflow
 
-### 2. Mobile Development Principles (React Native + Expo)
-- **Inspect First**: Always inspect `package.json`, Expo SDK version, and existing architecture before proposing dependencies or native code.
-- **Expo Updates vs Google Play Updates**: Never confuse Expo EAS OTA updates (JavaScript / asset bundles) with Google Play In-App Updates (native binaries).
-- **Google Play In-App Reviews**: Google Play enforces undisclosed quotas; never promise a review dialog will definitely appear.
-- **No Hallucinated Packages**: Verify that libraries are compatible with the specific Expo SDK and New Architecture (if enabled).
+- Inspect project structure, SDK versions, package.json and installed dependencies before implementing.
+- Separate Play binary updates from Expo OTA updates; review prompts are quota-controlled and may not display.
+- Don't claim native code works just because it compiles or generated code exists.
+- Require approval for destructive actions, publishing, paid services and security-sensitive changes.
+- Prefer the installed .claude/skills (project) or ~/.claude/skills (user) directory.
 
-### 3. Agent Skills & Rules Layout
-- Skills live in `skills/<skill-name>/SKILL.md` following the [Agent Skills specification](https://agentskills.io/specification).
-- When a user asks for an end-to-end mobile flow, load `skills/mobile-builder-kit/SKILL.md`.
-- When requirements are vague, load `skills/grill-me/SKILL.md` to conduct a focused interview.
-- When generating prompts, refer to `skills/app-blueprint/templates/master-prompt.md`.
+## Skill routing
 
----
-
-## Validation & Test Commands
-
-```bash
-# Validate all skills frontmatter and links
-python scripts/validate_skills.py
-
-# Run test suite
-python -m unittest discover -s tests -v
-
-# Test skill installer (dry-run)
-python scripts/install.py --target /path/to/project --all --dry-run
-```
+- app-discovery — original Grill Me-style product interview.
+- app-blueprint — MVP requirements and a single initial build prompt.
+- arabic-rtl — Arabic chat hygiene and React Native RTL testing.
+- play-in-app-updates / play-in-app-review — Play feature planning and verification.
+- mobile-quality-audit / play-launch-checklist / mobile-aso-growth — QA, release, growth.

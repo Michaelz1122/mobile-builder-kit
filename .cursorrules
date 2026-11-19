@@ -1,10 +1,5 @@
-# Cursor Rules — Mobile Builder Kit
-
-## Agent & Model Directives (Claude, GPT-4o, Codex)
-- When generating Arabic responses in Cursor chat, wrap response in `<div dir="rtl"> ... </div>` to ensure proper RTL alignment.
-- Maintain BiDi hygiene: never end a sentence with an English token followed by punctuation.
-- For React Native / Expo projects:
-  - Check Expo SDK version before recommending packages.
-  - Separate Expo OTA updates from Google Play In-App Updates.
-  - Review Google Play In-App Review limitations.
-- Sibling skills reside in `skills/` adhering to the Agent Skills standard.
+# Legacy Cursor configuration — retained for older Cursor versions
+# Prefer .cursor/rules/mobile-builder-kit.mdc in supported Cursor versions.
+# Do not inject raw HTML wrappers into every Arabic reply; test the active chat renderer.
+# Inspect SDK versions before adding native dependencies.
+# Apply quality, security, privacy and release checks for mobile apps.
