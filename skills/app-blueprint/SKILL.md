@@ -1,6 +1,6 @@
 ---
 name: app-blueprint
-description: Converts an Android app idea into an MVP product specification, acceptance criteria, data plan, and one AI coding master prompt. Use for vibe coding, Google Stitch-to-Antigravity workflows, or building a React Native Expo app with minimal manual screen-by-screen coding.
+description: Converts an Android app idea into an MVP product specification, acceptance criteria, data plan, and one AI coding master prompt. Use for vibe coding, Antigravity, Claude Code, or Codex/OpenAI workflows, or building a React Native Expo app with minimal manual screen-by-screen coding.
 license: MIT
 ---
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the open-source Agent Skills and Rules into an Antigravity project or user profile."""
+"""Install open-source Agent Skills and Rules for Antigravity, Claude, Codex, and Cursor."""
 from __future__ import annotations
 
 import argparse
@@ -41,6 +41,20 @@ def install_rule(file_name: str, destination: Path, *, force: bool = False, dry_
     return f"OK    rule {file_name} -> {output}"
 
 
+def copy_agent_config(source_file: str, destination: Path, *, force: bool = False, dry_run: bool = False) -> str:
+    source = ROOT / source_file
+    if not source.is_file():
+        return f"SKIP  {source_file}: source not found"
+    output = destination / source_file
+    if output.exists() and not force:
+        return f"SKIP  {source_file}: already exists at destination (use --force to replace)"
+    if dry_run:
+        return f"WOULD INSTALL {source_file} -> {output}"
+    destination.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, output)
+    return f"OK    {source_file} -> {output}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     place = parser.add_mutually_exclusive_group()
@@ -50,6 +64,8 @@ def main() -> int:
     choose.add_argument("--all", action="store_true", help="Install all skills and rules")
     choose.add_argument("--skills", help="Comma-separated skill names to install")
     choose.add_argument("--rules", action="store_true", help="Install rules only")
+    parser.add_argument("--agent", choices=["all", "antigravity", "claude", "codex", "cursor"], default="all",
+                        help="Target AI agent configuration to install (default: all)")
     parser.add_argument("--list", action="store_true", help="List available skill and rule names")
     parser.add_argument("--force", action="store_true", help="Overwrite existing files (make a backup first)")
     parser.add_argument("--dry-run", action="store_true", help="Show changes without copying files")
@@ -66,6 +82,7 @@ def main() -> int:
             print("Rules:")
             for r in rule_files:
                 print(f"  - {r}")
+        print("Supported Agents: Antigravity (Gemini), Claude Code (Anthropic), Codex / ChatGPT (OpenAI), Cursor")
         return 0
 
     if not args.all and not args.skills and not args.rules:
@@ -73,8 +90,9 @@ def main() -> int:
     if not args.target and not args.globally:
         parser.error("Choose --target PROJECT or --global")
 
-    skills_dest = (Path.home() / ".gemini" / "config" / "skills") if args.globally else (args.target.expanduser().resolve() / ".agents" / "skills")
-    rules_dest = (Path.home() / ".gemini" / "config" / "rules") if args.globally else (args.target.expanduser().resolve() / ".agents" / "rules")
+    project_root = args.target.expanduser().resolve() if args.target else None
+    skills_dest = (Path.home() / ".gemini" / "config" / "skills") if args.globally else (project_root / ".agents" / "skills")
+    rules_dest = (Path.home() / ".gemini" / "config" / "rules") if args.globally else (project_root / ".agents" / "rules")
 
     if args.all or args.skills:
         selected = names if args.all else [x.strip() for x in args.skills.split(",") if x.strip()]
@@ -87,6 +105,14 @@ def main() -> int:
     if args.all or args.rules:
         for r in rule_files:
             print(install_rule(r, rules_dest, force=args.force, dry_run=args.dry_run))
+
+    if project_root:
+        if args.agent in ("all", "claude"):
+            print(copy_agent_config("CLAUDE.md", project_root, force=args.force, dry_run=args.dry_run))
+        if args.agent in ("all", "codex", "antigravity"):
+            print(copy_agent_config("AGENTS.md", project_root, force=args.force, dry_run=args.dry_run))
+        if args.agent in ("all", "cursor"):
+            print(copy_agent_config(".cursorrules", project_root, force=args.force, dry_run=args.dry_run))
 
     return 0
 

@@ -8,6 +8,21 @@ Built with a React Native + Expo workflow in mind, but most skills are framework
 > **What it is:** reusable AI-agent instructions packaged as `SKILL.md` folders.  
 > **What it is not:** an Android APK, a Play Store application, an automatic plugin, or a guarantee that every AI model will obey its instructions.
 
+## Multi-Model & Cross-Agent Support
+
+Mobile Builder Kit is designed to work out of the box with the top AI coding agents and LLMs:
+
+| Model / Agent | How it's supported | Primary Config |
+| --- | --- | --- |
+| **Claude (Anthropic)** | Claude Code CLI, Claude 3.5 & 3.7 Sonnet | `CLAUDE.md`, `.agents/skills/` |
+| **Codex / ChatGPT (OpenAI)** | Codex CLI, GPT-4o, o1, o3, Copilot | `AGENTS.md`, `.agents/skills/` |
+| **Gemini (Google)** | Google Antigravity, Gemini 3.8 / 2.5 Pro | `GEMINI.md`, `~/.gemini/config/` |
+| **Cursor** | Cursor IDE with Claude / GPT-4o | `.cursorrules`, `.agents/skills/` |
+
+### Environment-Aware RTL
+- **Webviews & IDE Chat (Antigravity, Cursor, VS Code):** Enforces `<div dir="rtl">` wrapper for proper right-to-left layout.
+- **Terminal CLI (Claude Code CLI, Codex Terminal):** Automatically avoids raw HTML tags to prevent terminal clutter while strictly enforcing Arabic logical ordering and BiDi punctuation hygiene.
+
 ## Skills included
 
 | Skill | When to use |

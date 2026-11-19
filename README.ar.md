@@ -1,8 +1,21 @@
 # Mobile Builder Kit — مساعد بناء تطبيقات الموبايل بالـAI
 
-باكدج Skills مجانية ومفتوحة المصدر لأي حد بيعمل تطبيق Android بالذكاء الاصطناعي، خصوصا مع **Google Antigravity + React Native + Expo**.
+باكدج Skills و Rules مجانية ومفتوحة المصدر متوافقة مع كافة موديلات الذكاء الاصطناعي: **Claude (Anthropic)** و **Codex / ChatGPT (OpenAI)** و **Gemini / Antigravity (Google)** لبناء تطبيقات Android بـ **React Native + Expo**.
 
 **دي ملفات تعليمات للأدوات اللي بتدعم Agent Skills، مش تطبيق بيتثبت من Google Play.**
+
+## دعم كافة الموديلات (Multi-Model Support)
+
+| الموديل / الأداة | طريقة الدعم | ملف الإعدادات |
+| --- | --- | --- |
+| **Claude (Anthropic)** | يدعم Claude Code CLI و Claude 3.5 & 3.7 Sonnet | `CLAUDE.md` + `.agents/skills/` |
+| **Codex / ChatGPT (OpenAI)** | يدعم Codex CLI و GPT-4o و Copilot | `AGENTS.md` + `.agents/skills/` |
+| **Gemini (Google)** | يدعم Google Antigravity بالكامل | `GEMINI.md` + `.agents/` |
+| **Cursor** | يدعم محرر Cursor مع Claude أو GPT-4o | `.cursorrules` + `.agents/skills/` |
+
+### ذكاء التعامل مع بيئات العرض (RTL Surface Awareness)
+- **في واجهات الشات والـ Webview (مثل Antigravity, Cursor, VS Code):** يتم تغليف الردود بـ `<div dir="rtl">` لضمان المحاذاة من اليمين لليسار.
+- **في شاشات الطرفية و CLI (مثل Claude Code CLI و Codex Terminal):** يتم تعطيل وسوم HTML تلقائياً لمنع تشويه التيرمينال، مع الالتزام التام بسلامة علامات الترقيم (BiDi Hygiene) وبدء الفقرات بالعربي.
 
 ## الباكدج فيها إيه؟
 
