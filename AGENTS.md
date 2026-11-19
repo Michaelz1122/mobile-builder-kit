@@ -1,33 +1,29 @@
-# AGENTS.md — Universal Agent & Model Instructions
-<!-- Compatible with: OpenAI Codex / ChatGPT, Anthropic Claude, Google Gemini / Antigravity, Cursor, Copilot -->
+# Mobile Builder Kit — Codex / AGENTS.md
 
-## Project Context
-**Mobile Builder Kit** is an open-source, multi-model Agent Skill and Rule bundle for building mobile apps with AI.
-- Architecture: React Native + Expo.
-- Skills format: Modular `SKILL.md` following [Agent Skills standard](https://agentskills.io/specification).
-- Scope: Idea discovery, architectural blueprint, Arabic RTL & BiDi hygiene, Play updates & reviews, QA audit, store launch, and ASO growth.
+This project uses reusable Agent Skills for AI-assisted Android apps (primarily React Native + Expo).
 
----
+## Arabic and RTL
 
-## Universal Rules for All AI Coding Models (Codex, Claude, Gemini)
+- Respond in the requested language; Egyptian Arabic is appropriate when requested.
+- Keep Markdown readable and preserve LTR code, commands, paths and URLs.
+- Do **not** force raw `<div dir="rtl">` around chat responses. Only use HTML direction attributes when the renderer is confirmed to support them.
+- RTL inside an app is a code-and-testing task, not just a chat-formatting instruction. Verify screens on actual devices.
 
-### 1. Arabic RTL & BiDi Hygiene Rule
-- **Web / IDE / Webview surfaces** (Antigravity, Cursor, VS Code, ChatGPT web): Wrap full Arabic responses with `<div dir="rtl">` at start and `</div>` at end.
-- **Terminal / CLI surfaces** (Claude Code CLI, Codex Terminal, GitHub Copilot CLI): Omit HTML tags; enforce Arabic logical order and BiDi hygiene without raw HTML markup.
-- **BiDi Hygiene**: Keep Latin technical identifiers in backticks. Never end sentences with Latin text immediately followed by Arabic punctuation.
+## Development quality gates
 
-### 2. Mobile Engineering Constraints
-- Always inspect the repository and verify SDK version before adding packages.
-- Distinguish Google Play In-App Updates (native binaries) from Expo Updates (OTA JavaScript/assets).
-- Acknowledge Google Play In-App Review quotas (display is never guaranteed).
-- Do not perform irreversible actions (deploying, deleting files, purchasing services) without explicit developer confirmation.
+- Inspect package.json, Expo SDK/RN versions, build method, and existing code before changing dependencies.
+- Differentiate Expo OTA JS updates and Google Play in-app binary updates.
+- Do not promise that Play in-app review dialogs will appear; Google controls quotas.
+- Avoid invented API contracts, fictional analytics or mocked success in production.
+- Do not publish, pay, delete user data, or overwrite secrets without explicit authorization.
 
-### 3. Skill Navigation
-- Main orchestrator: `skills/mobile-builder-kit/SKILL.md`
-- Clarifying requirements: `skills/grill-me/SKILL.md`
-- One-shot build prompt: `skills/app-blueprint/SKILL.md`
-- Play updates: `skills/play-in-app-updates/SKILL.md`
-- Reviews: `skills/play-in-app-review/SKILL.md`
-- QA audit: `skills/mobile-quality-audit/SKILL.md`
-- Store launch: `skills/play-launch-checklist/SKILL.md`
-- Growth: `skills/mobile-aso-growth/SKILL.md`
+## Skills
+
+Use installed skills as needed:
+- app-discovery: one-question-at-a-time requirements interview (our Grill Me workflow).
+- app-blueprint: MVP specification and initial master build prompt.
+- arabic-rtl: language and app RTL audit.
+- play-in-app-updates, play-in-app-review: Play-native engagement features.
+- mobile-quality-audit, play-launch-checklist, mobile-aso-growth: release quality and growth.
+
+For Codex CLI and IDE, use /skills or mention a skill with $skill-name.
