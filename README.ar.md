@@ -18,6 +18,9 @@
 | `play-launch-checklist` | تجهيز Google Play واختبارات النشر والخصوصية والربح. |
 | `mobile-aso-growth` | تحسين ASO ومتابعة التحميلات والحملات. |
 
+### ملفات الـ Rules الدائمة (Always-on Rules)
+بجانب الـ Skills، تحتوي الباكدج على ملف Rules جاهز (`rules/arabic-rtl.md` و `rules/AGENTS.md`). يضمن هذا الملف تطبيق قواعد الـ RTL وتغليف الردود بـ `<div dir="rtl">` تلقائياً في كل رسالة دون انتظار تفعيل المهارة حسب سياق الحديث.
+
 ## التثبيت السريع
 
 1. نزّل ملفات الباكدج أو اعمل Clone للـRepository بعد رفعها على GitHub.

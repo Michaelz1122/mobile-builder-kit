@@ -22,6 +22,9 @@ Built with a React Native + Expo workflow in mind, but most skills are framework
 | `play-launch-checklist` | Prepare Android releases, Play Console, billing, privacy, testing and rollout. |
 | `mobile-aso-growth` | Plan App Store Optimization, analytics and small-budget acquisition tests. |
 
+### Always-On Rules
+In addition to on-demand skills, the kit includes persistent rules in `rules/` (`rules/arabic-rtl.md` and `rules/AGENTS.md`). While skills are activated contextually, rules placed in `.agents/rules/` or project root `AGENTS.md` enforce RTL message wrapping (`<div dir="rtl">`) and punctuation hygiene unconditionally on every response.
+
 Each skill can be installed **individually**. The umbrella `mobile-builder-kit` skill points to the others, but agent support for discovering sibling skills varies; install all skills for the broadest coverage.
 
 ## Install in Google Antigravity

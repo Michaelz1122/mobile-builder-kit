@@ -1,34 +1,50 @@
 ---
 name: arabic-rtl
-description: Improves the readability and right-to-left direction of Arabic AI responses and Arabic mobile interfaces. Use for Arabic or Egyptian Arabic chat, mixed Arabic-English technical terms, UI RTL debugging, or bidirectional layout audits.
+description: Guarantees strict right-to-left (RTL) formatting and BiDi hygiene for Arabic AI responses and Arabic mobile interfaces (React Native / Expo). Use for Arabic chat formatting, technical BiDi text, or mobile UI layout.
 license: MIT
 ---
 
-# Arabic RTL — language and interface quality
+# Arabic RTL — Language, Chat Hygiene & Mobile Interface Quality
 
-## First distinguish the surface
+## 1. Chat & Markdown Responses (قواعد صياغة وتنسيق الردود)
 
-- **Chat/Markdown responses:** write correctly ordered Arabic and isolate mixed English spans. The model controls generated text, not the host app's layout engine. Do not promise universal RTL for all models, clients or renderers.
-- **Web UI:** apply HTML/CSS directionality and test nested LTR content.
-- **React Native / Expo UI:** handle text writing direction, alignment, flex layout and localized navigation explicitly; test on device. Do not force global RTL in an app that must support LTR unless the locale/design requires it.
+عند الرد باللغة العربية (أو العامية المصرية)، يجب الالتزام الصارم بالقواعد التالية لضمان اتجاه النص وسلامة علامات الترقيم:
 
-## Arabic response protocol
+### أ. التغليف الإلزامي للرد بالكامل (Mandatory RTL Chat Wrapping)
+واجهة الشات والـ Webview تكون مضبوطة على محاذاة اليسار (LTR) افتراضياً. لفرض اتجاه اليمين لليسار والمحاذاة الصحيحة لكل العناوين والقوائم والنقاط:
+- يجب وضع وسم `<div dir="rtl">` في بداية كل رد باللغة العربية، وإغلاقه بـ `</div>` في نهاية الرد:
+  ```html
+  <div dir="rtl">
 
-1. When the user writes Arabic, respond in Arabic unless they request another language. Prefer natural Egyptian Arabic when the user uses it.
-2. Begin each paragraph and list item with **Arabic text**, not an English package name or a number, where practical. This avoids bidirectional surprises in simple clients.
-3. Keep Latin identifiers, code, URLs, shell commands and file paths verbatim inside backticks. Don't translate API names.
-4. Avoid unnecessary punctuation, diacritics, mixed-direction decorative arrows and manually inserted text direction controls. If a rendering engine demonstrably needs bidirectional isolation, wrap only mixed tokens with Unicode isolates (FSI U+2068 / PDI U+2069) or an appropriate platform component; document and test that choice.
-5. Preserve logical reading order in steps and Markdown tables. For severe Markdown misrendering, prefer short paragraphs, a simple list, or an explicit RTL HTML container **only if that output surface supports it**.
-6. Before responding, mentally test a line with Arabic + `Expo Router` + `(SDK 57)` + `2026/11/19` + an email address. Do not garble numbers, paths or punctuation.
-7. Never claim to have changed the user's app/chat CSS, OS language, or model settings just by applying this skill.
+  محتوى الرد هنا...
 
-## Mobile UI protocol
+  </div>
+  ```
 
-1. Detect the stack and locale model. For React Native, inspect `I18nManager`, app restart behavior, `Text` writing direction and actual layout styles before modifying them.
-2. Apply `writingDirection: 'rtl'` and appropriate `textAlign` where supported by the native component; handle `flexDirection: 'row-reverse'` only for **directional** rows (not charts or media).
-3. Mirror directional UI icons (back/forward) where appropriate, not universal symbols (play, search, logos).
-4. Keep phone numbers, code/OTP, email, URLs, currency and Latin app identifiers LTR as semantically appropriate.
-5. Check forms (cursor and placeholder), RTL navigation, list alignment, numbers, accessibility reading order, modal dialogs and mixed-language PDF/export content.
-6. Supply a screenshot/device test checklist instead of declaring RTL correct based on source inspection alone.
+### ب. ضبط النصوص المختلطة (BiDi Text Hygiene)
+- **المصطلحات التقنية والإنجليزية**: عند ذكر أسماء التقنيات والحزم (مثل React Native, Expo, Supabase, Google Play)، ضعها دائماً داخل سياق عربي سلس أو بين أقواس.
+- **منع تشوه علامات الترقيم**: **ممنوع نهائياً** إنهاء الجملة أو الفقرة بكلمة إنجليزية متبوعة بعلامة ترقيم عربية مباشرة، لأن محرك العرض سينقل النقطة أو علامة التعجب إلى أقصى اليمين بدلاً من اليسار. اختم الجملة دائماً بكلمة عربية أو ضع علامة الاتجاه الخفية `&rlm;` (`\u200F`).
+- **المعرفات والأكواد**: حافظ على أسماء المتغيرات والأوامر والروابط والمسارات داخل علامات التنصيص المائلة (Backticks) دون ترجمتها.
 
-See [RTL test checklist](references/rtl-layout-checklist.md).
+### ج. كتل الأكواد البرمجية (Code Blocks)
+- الكود البرمجي داخل كتل الأكواد (Fenced Code Blocks ```) يظل بطبيعته من اليسار لليمين (LTR).
+- الشرح والملاحظات خارج كتل الأكواد تظل بالكامل من اليمين لليسار داخل حاوية `<div dir="rtl">`.
+
+---
+
+## 2. واجهات تطبيقات الموبايل (React Native & Expo UI Protocol)
+
+عند بناء أو مراجعة واجهات التطبيقات التي تدعم اللغة العربية:
+
+1. **التعامل مع اتجاه النص والمحاذاة**:
+   - تطبيق `writingDirection: 'rtl'` ومحاذاة `textAlign: 'right'` للنصوص العربية داخل مكونات `Text` و `TextInput`.
+   - استخدام `flexDirection: 'row-reverse'` فقط للحاويات ذات الطابع الاتجاهي، وليس لعناصر الوسائط أو الرسوم البيانية.
+2. **عكس الأيقونات الاتجاهية**:
+   - عكس أيقونات التنقل والاتجاه (مثل: أسهم الرجوع والتقدم)، مع الإبقاء على الأيقونات العامة محايدة دون عكس (مثل: زر التشغيل Play، البحث Search، وشعارات العلامات التجارية).
+3. **الحفاظ على LTR للبيانات الحساسة**:
+   - أرقام الهواتف، رموز التحقق (OTP)، العناوين والروابط البريدية (URLs / Emails)، والعملات يجب أن تحتفظ باتجاه LTR السليم منعاً لقراءتها بشكل خاطئ.
+4. **فحص حقول الإدخال والشاشات**:
+   - التأكد من موضع مؤشر الكتابة (Cursor) والنص التلميحي (Placeholder) في حقول الإدخال.
+   - مراجعة النوافذ المنبثقة (Modals / Alerts) والتنقل في الـ Stacks والتأكد من دعم الخطوط العربية وتجربتها على جهاز حقيقي.
+
+راجع أيضاً: [RTL test checklist](references/rtl-layout-checklist.md).
