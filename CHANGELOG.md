@@ -3,7 +3,7 @@
 ## 0.2.0 — 2026-11-19
 
 - **GitHub SEO & Discoverability**: Naturally integrated search keywords for Android Agent Skills, Claude Code, Codex, Antigravity, Cursor, and Expo RTL.
-- **Conversion-Optimized READMEs**: Redesigned English (`README.md`) and Egyptian Arabic (`README.ar.md`) documentation with clear above-the-fold value proposition, agent support matrix, and first-skill invocation guides.
+- **Conversion-Optimized READMEs**: Redesigned English (`README.md`) and Egyptian Arabic (`README.ar.md`) documentation with clear above-the-fold value proposition, agent support matrix, creator portfolio section with UTM attribution, and first-skill invocation guides.
 - **Agent Skills CLI Support**: Documented and verified one-liner installation using `npx skills add Michaelz1122/mobile-builder-kit`.
 - **Practical Demonstrations**: Added three comprehensive, production-ready guides in `docs/demos/`:
   - `arabic-rtl-demo.md`: Problematic vs production-ready Arabic RTL React Native implementations and device test checklist.

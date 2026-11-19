@@ -169,6 +169,18 @@ python scripts/install.py --agent all --target /tmp/test-app --all --dry-run
 
 ---
 
+## About the Creator
+
+Hi, I'm **Michael Zahy** — an AI Engineer and Mobile Specialist building production-grade mobile applications with React Native, Expo, and AI Coding Agents.
+
+[![Website](https://img.shields.io/badge/Portfolio-michaelzahy.com-0066cc?style=flat-square&logo=google-chrome&logoColor=white)](https://michaelzahy.com?utm_source=github&utm_medium=readme&utm_campaign=mobile-builder-kit)
+[![GitHub](https://img.shields.io/badge/GitHub-@Michaelz1122-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Michaelz1122)
+
+- 💼 **Available for Consulting & Freelance**: Need help building an AI-assisted MVP, fixing complex Arabic RTL layouts, or preparing an Android app for Google Play release?
+- 🌐 **Explore My Work**: Discover my latest apps, case studies, and services at [michaelzahy.com](https://michaelzahy.com?utm_source=github&utm_medium=readme&utm_campaign=mobile-builder-kit).
+
+---
+
 ## Contributing & Distribution
 
 Contributions, bug reports, and enhancements backed by official Android, Expo, or Google Play documentation are welcome!

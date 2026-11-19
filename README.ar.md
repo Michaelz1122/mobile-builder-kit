@@ -169,6 +169,18 @@ python scripts/install.py --agent all --target /tmp/test-app --all --dry-run
 
 ---
 
+## عن المطور (About the Creator)
+
+أهلاً بك! أنا **مايكل زاهي (Michael Zahy)** — مهندس ذكاء اصطناعي ومطور تطبيقات موبايل متخصص في بناء وتطوير تطبيقات الإنتاج بـ React Native و Expo بالتعاون مع أدوات الـ AI Coding Agents.
+
+[![Website](https://img.shields.io/badge/Portfolio-michaelzahy.com-0066cc?style=flat-square&logo=google-chrome&logoColor=white)](https://michaelzahy.com?utm_source=github&utm_medium=readme&utm_campaign=mobile-builder-kit)
+[![GitHub](https://img.shields.io/badge/GitHub-@Michaelz1122-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Michaelz1122)
+
+- 💼 **متاح للاستشارات والعمل الحر (Consulting & Freelance):** لو محتاج مساعدة في بناء تطبيق MVP سريع بالذكاء الاصطناعي، أو ضبط واجهات الـ Arabic RTL المعقدة، أو تجهيز ونشر تطبيقك على Google Play.
+- 🌐 **تصفح أعمالي ومشاريعي:** تقدر تتعرف على سابقة أعمالي وخدماتي وتتواصل معايا مباشرة عبر موقعي الشخصي: [michaelzahy.com](https://michaelzahy.com?utm_source=github&utm_medium=readme&utm_campaign=mobile-builder-kit).
+
+---
+
 ## المساهمة والتوزيع
 
 المستودع مفتوح المصدر ونرحب بالمساهمات المبنية على مصادر رسمية:
